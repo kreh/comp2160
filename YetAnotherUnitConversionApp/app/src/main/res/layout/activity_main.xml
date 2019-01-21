@@ -10,7 +10,7 @@
         tools:context=".MainActivity">
 
     <EditText
-            android:layout_width="1520dp"
+            android:layout_width="1521dp"
             android:inputType="numberSigned|numberDecimal"
             android:ems="10"
             android:id="@+id/editText"

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Yet Another Unit Conversion App</string>
-    <string name="mainTextInput">0</string>
+    <string name="mainTextInput">0°</string>
+    <string name="output"></string>
+    <string name="C">C</string>
+    <string name="F">F</string>
 </resources>

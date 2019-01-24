@@ -30,7 +30,7 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
         setContentView(R.layout.activity_main)
         inputNumber = findViewById(R.id.mainTextInput)
 
-        inputNumber?.text = SpannableStringBuilder(getString(R.string.mainTextDefaultFormat, 0.0, 'C'))
+        inputNumber?.text = SpannableStringBuilder(getString(R.string.mainTextDefaultFormat, 0.0, 'F'))
         // lambda that controls a listener to the enter key on the keyboard
         inputNumber?.setOnKeyListener(View.OnKeyListener { p0, p1, p2 ->
             if (p2?.action == KeyEvent.ACTION_DOWN && p1 == KeyEvent.KEYCODE_ENTER) {
@@ -102,17 +102,18 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
         if (p2 == 0) {
             cSelected = true
             inputNumber?.text = SpannableStringBuilder(getString(format, input, 'F'))
+            convertToC(input)
         }
         else {
             cSelected = false
             inputNumber?.text = SpannableStringBuilder(getString(format, input, 'C'))
+            convertToF(input)
         }
     }
 
     fun submitInput(view: View?) {
         val input: Double = this.findViewById<EditText>(R.id.mainTextInput).text.toString().removeTempUnit()
-        println("Input: $input")
-        println("Output: ${if (cSelected) convertToC(input) else convertToF(input)}")
+        if (cSelected) convertToC(input) else convertToF(input)
 //        button.setBackgroundResource(R.drawable.btn)
 //        input.toString()
 //        String.format("%s°")

@@ -5,15 +5,16 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 
 
-class MainActivity : Activity(), AdapterView.OnItemSelectedListener {
+class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouchListener {
     // TODO Degree symbol and unit on output - Done
     // TODO unit on input - Done
-    // TODO "to <unit>" on spinner
-    // TODO onclick function to change spinner value
+    // TODO "to <unit>" on spinner - Done
+    // TODO onclick function to change spinner value - Done
     // TODO confine edittext to only number values? constrain degree symbol and unit
     // TODO fragment and tab management for output
 
@@ -43,6 +44,7 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener {
         convertToC(0.0)
 
         spinner = findViewById(R.id.spinner)
+        spinner?.setOnTouchListener(this)
         spinner?.onItemSelectedListener = this
 
         ArrayAdapter.createFromResource(
@@ -55,6 +57,10 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener {
             // Apply the adapter to the spinner
             spinner?.adapter = adapter
         }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
     }
 
     private fun getFormat(input: Double): Int {
@@ -75,9 +81,18 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener {
         return c
     }
 
+    override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
+        if (p1?.action == MotionEvent.ACTION_UP) {
+            spinner?.setSelection(if (cSelected) 1 else 0)
+            return true
+        } else if (p1?.action == MotionEvent.ACTION_DOWN) {
+            return true
+        }
+        return false
+    }
+
     override fun onNothingSelected(p0: AdapterView<*>?) {
-        spinner?.setSelection(if (cSelected) 1 else 0, true)
-        //spinner?.performItemClick(findViewById(R.id.spinner), if (cSelected) 1 else 0)
+        return
     }
 
     // Determines if using C temp or F temp to convert from (cSelected = true -> using C temp)

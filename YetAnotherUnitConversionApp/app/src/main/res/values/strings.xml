@@ -8,4 +8,7 @@
         <item>to F</item>
     </string-array>
     <string name="submit">SUBMIT</string>
+    <string name="hint">0°</string>
+    <string name="author">Dave Aldrich | Jan 2019</string>
+    <string name="_0">0º</string>
 </resources>

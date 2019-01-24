@@ -1,8 +1,9 @@
 package t00593238.dave.yetanotherunitconversionapp
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
-import android.text.Editable
+import android.support.constraint.ConstraintLayout
 import android.text.SpannableStringBuilder
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -11,25 +12,24 @@ import android.widget.*
 
 
 class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouchListener {
-    // TODO Degree symbol and unit on output - Done
-    // TODO unit on input - Done
-    // TODO "to <unit>" on spinner - Done
-    // TODO onclick function to change spinner value - Done
     // TODO confine edittext to only number values? constrain degree symbol and unit
     // TODO fragment and tab management for output
 
-    fun String.removeTempUnit(): Double = replace(Regex("([°CF]{0,2})$"), "").toDouble()
-    var inputNumber: EditText? = null
-    var outputNumber: TextView? = null
-    var spinner: Spinner? = null
-    var cSelected: Boolean = false
+    private fun String.removeTempUnit(): Double = if (equals("")) 0.0 else replace(Regex("([°CF]{0,2})$")
+            , "").toDouble()
+
+    private var inputNumber: EditText? = null
+    private var outputNumber: TextView? = null
+    private var spinner: Spinner? = null
+    private var constraintLayout: ConstraintLayout? = null
+    private var cSelected: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        constraintLayout = findViewById(R.id.constraint_layout)
         inputNumber = findViewById(R.id.mainTextInput)
-
         inputNumber?.text = SpannableStringBuilder(getString(R.string.mainTextDefaultFormat, 0.0, 'F'))
         // lambda that controls a listener to the enter key on the keyboard
         inputNumber?.setOnKeyListener(View.OnKeyListener { p0, p1, p2 ->
@@ -59,28 +59,25 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
         }
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-    }
-
     private fun getFormat(input: Double): Int {
         return if (input.toInt().toDouble() == input) R.string.mainTextDefaultFormat else R.string.mainTextFormat
     }
 
-    private fun convertToF(input: Double): Double {
+    private fun convertToF(input: Double) {
         val f = input * (9.0 / 5.0) + 32.0
         val format = getFormat(f)
         outputNumber?.text = getString(format, f, 'F')
-        return f
+        tempChange(f, false)
     }
 
-    private fun convertToC(input: Double): Double {
+    private fun convertToC(input: Double) {
         val c = (input - 32.0) * (5.0 / 9.0)
         val format = getFormat(c)
         outputNumber?.text = getString(format, c, 'C')
-        return c
+        tempChange(c, true)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
         if (p1?.action == MotionEvent.ACTION_UP) {
             spinner?.setSelection(if (cSelected) 1 else 0)
@@ -103,8 +100,7 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
             cSelected = true
             inputNumber?.text = SpannableStringBuilder(getString(format, input, 'F'))
             convertToC(input)
-        }
-        else {
+        } else {
             cSelected = false
             inputNumber?.text = SpannableStringBuilder(getString(format, input, 'C'))
             convertToF(input)
@@ -112,10 +108,37 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
     }
 
     fun submitInput(view: View?) {
-        val input: Double = this.findViewById<EditText>(R.id.mainTextInput).text.toString().removeTempUnit()
+        val input: Double = findViewById<EditText>(R.id.mainTextInput).text.toString().removeTempUnit()
         if (cSelected) convertToC(input) else convertToF(input)
-//        button.setBackgroundResource(R.drawable.btn)
-//        input.toString()
-//        String.format("%s°")
+    }
+
+    // Animations
+
+    private fun tempChange(output: Double, toC: Boolean) {
+        if (toC) {
+            when {
+                output > 35.0 -> {
+
+                }
+                output > 10.0 -> {
+
+                }
+                else -> {
+
+                }
+            }
+        } else {
+            when {
+                output > 95.0 -> {
+
+                }
+                output > 50.0 -> {
+
+                }
+                else -> {
+
+                }
+            }
+        }
     }
 }

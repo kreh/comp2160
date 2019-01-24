@@ -18,7 +18,7 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
     // TODO confine edittext to only number values? constrain degree symbol and unit
     // TODO fragment and tab management for output
 
-    fun String.removeTempUnit(): Double = reversed().substring(2).reversed().toDouble()
+    fun String.removeTempUnit(): Double = replace(Regex("([°CF]{0,2})$"), "").toDouble()
     var inputNumber: EditText? = null
     var outputNumber: TextView? = null
     var spinner: Spinner? = null

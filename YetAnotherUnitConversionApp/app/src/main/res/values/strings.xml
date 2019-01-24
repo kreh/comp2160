@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Yet Another Unit Conversion App</string>
-    <string name="mainTextInput">0°</string>
+    <string name="mainTextDefaultFormat">%1$.0f°%2$c</string>
+    <string name="mainTextFormat">%1$.2f°%2$c</string>
     <string name="output"></string>
     <string-array name="tempChange">
-        <item>C</item>
-        <item>F</item>
+        <item>to C</item>
+        <item>to F</item>
     </string-array>
     <string name="submit">SUBMIT</string>
 </resources>

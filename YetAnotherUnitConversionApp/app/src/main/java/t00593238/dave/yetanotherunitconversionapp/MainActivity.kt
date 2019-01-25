@@ -2,6 +2,7 @@ package t00593238.dave.yetanotherunitconversionapp
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
@@ -9,10 +10,7 @@ import android.text.SpannableStringBuilder
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 
 const val OUTPUT_STRING = "t00593238.dave.yetanotherunitconversionapp.MainActivity.OUTPUT_STRING"
 const val OUTPUT_TEMPERATURE = "t00593238.dave.yetanotherunitconversionapp.MainActivity.OUTPUT_TEMPERATURE"
@@ -22,9 +20,16 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
     // TODO confine edittext to only number values? constrain degree symbol and unit
     // TODO fragment and tab management for output
 
+    private fun String.checkSubmission(ctx: Context): Boolean {
+        if (equals("")) {
+            val toast = Toast.makeText(ctx, R.string.checkSubToast, Toast.LENGTH_SHORT)
+            toast.show()
+            return false
+        }; return true
+    }
+
     private fun String.removeTempUnit(): Double =
-        if (equals("")) 0.0
-        else replace(Regex("([°CF]{0,2})$"), "").toDouble()
+        replace(Regex("([°CF]{0,2})$"), "").toDouble()
 
 
     private lateinit var inputNumber: EditText
@@ -86,7 +91,8 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
 
     // Determines if using C temp or F temp to convert from (cSelected = true -> using C temp)
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        val input: Double = inputNumber.text.toString().removeTempUnit()
+        val inputStr = inputNumber.text.toString()
+        val input: Double = if (inputStr == "") 0.0 else inputStr.removeTempUnit()
         val format = getFormat(input)
         if (p2 == 0) {
             cSelected = true
@@ -99,9 +105,12 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
 
 
     @Suppress("UNUSED_PARAMETER")
-    fun submitInput( view: View?) {
-        val input: Double = findViewById<EditText>(R.id.mainTextInput).text.toString().removeTempUnit()
-        if (cSelected) convertToC(input) else convertToF(input)
+    fun submitInput(view: View?) {
+        val str = findViewById<EditText>(R.id.mainTextInput).text.toString()
+        if (str.checkSubmission(this)) {
+            val input = str.removeTempUnit()
+            if (cSelected) convertToC(input) else convertToF(input)
+        }
     }
 
 

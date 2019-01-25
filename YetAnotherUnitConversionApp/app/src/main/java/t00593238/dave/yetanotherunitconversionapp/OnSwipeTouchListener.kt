@@ -15,6 +15,7 @@ open class OnSwipeTouchListener(context: Context) : View.OnTouchListener {
         return gestureDetector.onTouchEvent(event)
     }
 
+    @Suppress("UNUSED")
     fun getGestureDetector(): GestureDetector {
         return gestureDetector
     }

@@ -9,7 +9,10 @@ import android.text.SpannableStringBuilder
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.Spinner
 
 const val OUTPUT_STRING = "t00593238.dave.yetanotherunitconversionapp.MainActivity.OUTPUT_STRING"
 const val OUTPUT_TEMPERATURE = "t00593238.dave.yetanotherunitconversionapp.MainActivity.OUTPUT_TEMPERATURE"
@@ -20,9 +23,8 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
     // TODO fragment and tab management for output
 
     private fun String.removeTempUnit(): Double =
-            if (equals("")) 0.0
-            else replace(Regex("([°CF]{0,2})$"), "").toDouble()
-
+        if (equals("")) 0.0
+        else replace(Regex("([°CF]{0,2})$"), "").toDouble()
 
 
     private var inputNumber: EditText? = null
@@ -56,9 +58,9 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
         spinner?.onItemSelectedListener = this
 
         ArrayAdapter.createFromResource(
-                this,
-                R.array.tempChange,
-                android.R.layout.simple_spinner_item
+            this,
+            R.array.tempChange,
+            android.R.layout.simple_spinner_item
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_gallery_item)

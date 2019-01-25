@@ -23,7 +23,7 @@ class OutputActivity : Activity() {
         val textView_Temperature = findViewById<TextView>(R.id.temp_output)
         val textView_Tagline = findViewById<TextView>(R.id.temp_tagline)
 
-        constraintLayout_Output.setOnTouchListener(object: OnSwipeTouchListener(this) {
+        constraintLayout_Output.setOnTouchListener(object : OnSwipeTouchListener(this) {
             override fun onSwipeRight() {
                 onBackPressed()
             }

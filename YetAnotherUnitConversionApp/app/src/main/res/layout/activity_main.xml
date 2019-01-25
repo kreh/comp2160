@@ -4,10 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout_Main"
-    android:hapticFeedbackEnabled="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_drawable"
+    android:hapticFeedbackEnabled="true"
     tools:context=".MainActivity">
 
     <TextView
@@ -42,7 +42,6 @@
     <EditText
         android:id="@+id/mainTextInput"
         android:layout_width="match_parent"
-        android:textSize="100sp"
         android:layout_height="240dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -57,6 +56,7 @@
         android:inputType="numberSigned|numberDecimal"
         android:selectAllOnFocus="true"
         android:singleLine="true"
+        android:textSize="100sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

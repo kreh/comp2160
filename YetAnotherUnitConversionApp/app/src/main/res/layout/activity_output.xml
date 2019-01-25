@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout_Output"
-    android:background="@drawable/n_gradient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/n_gradient"
     tools:context=".OutputActivity">
 
     <TextView
@@ -21,8 +21,8 @@
         android:autoSizeStepGranularity="2sp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
-        android:text="@string/output"
         android:maxLines="1"
+        android:text="@string/output"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

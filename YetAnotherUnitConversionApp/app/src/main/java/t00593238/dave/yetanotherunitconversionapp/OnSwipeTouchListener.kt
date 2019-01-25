@@ -15,7 +15,9 @@ open class OnSwipeTouchListener(context: Context) : View.OnTouchListener {
         return gestureDetector.onTouchEvent(event)
     }
 
-    fun getGestureDetector(): GestureDetector { return gestureDetector }
+    fun getGestureDetector(): GestureDetector {
+        return gestureDetector
+    }
 
     open fun onSwipeRight() {}
 

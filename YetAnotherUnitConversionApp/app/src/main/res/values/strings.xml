@@ -26,4 +26,5 @@
         <item>I don\'t know what those liberals are on about!</item>
         <item>Don\'t worry, this will soon be a thing of the past.</item>
     </string-array>
+    <string name="checkSubToast">Enter a value, if you will.</string>
 </resources>

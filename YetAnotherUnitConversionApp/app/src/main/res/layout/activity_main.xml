@@ -3,10 +3,11 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraint_layout"
+    android:id="@+id/constraintLayout_Main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_drawable"
+    android:hapticFeedbackEnabled="true"
     tools:context=".MainActivity">
 
     <TextView
@@ -16,7 +17,6 @@
         android:layout_marginTop="40dp"
         android:layout_weight="1"
         android:gravity="top|center"
-        android:hapticFeedbackEnabled="true"
         android:shadowColor="@color/compLab2MainLight"
         android:text="@string/app_name"
         android:textAllCaps="true"
@@ -30,9 +30,9 @@
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="1dp"
         android:layout_marginBottom="128dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toTopOf="@+id/mainTextInput"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,43 +41,26 @@
 
     <EditText
         android:id="@+id/mainTextInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="175dp"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:background="@android:color/transparent"
-        android:ems="10"
-        android:gravity="center_horizontal"
+        android:ellipsize="none"
+        android:gravity="center"
+        android:hapticFeedbackEnabled="true"
         android:hint="@string/_0"
         android:inputType="numberSigned|numberDecimal"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="12sp"
-        android:autoSizeMaxTextSize="160sp"
-        android:autoSizeStepGranularity="2sp"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:textSize="100sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
-    <TextView
-        android:id="@+id/output"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
-        android:gravity="center"
-        android:text="@string/output"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -119,23 +102,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner"
         app:layout_constraintVertical_bias="0.254" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/output"
-        android:textSize="50sp"
-        app:layout_constraintBottom_toTopOf="@+id/mainTextInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
         android:id="@+id/author"

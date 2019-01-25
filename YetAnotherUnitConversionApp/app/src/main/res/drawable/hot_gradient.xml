@@ -3,11 +3,10 @@
 
     <gradient
         android:angle="45"
-        android:centerColor="@color/compLab2MainDark"
-        android:endColor="@color/compLab2MainLight"
-        android:startColor="@color/compLab2MainLight"
+        android:centerColor="@color/hotDark"
+        android:endColor="@color/hotLight"
+        android:startColor="@color/hotLight"
         android:type="linear" />
-
     <corners android:radius="0dp" />
 
 </shape>

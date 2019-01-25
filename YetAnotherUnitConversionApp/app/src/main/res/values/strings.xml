@@ -11,4 +11,19 @@
     <string name="hint">0°</string>
     <string name="author">Dave Aldrich | Jan 2019</string>
     <string name="_0">0º</string>
+    <string-array name="hotOutside">
+        <item>Wow\, global warming is really taking it\'s toll!</item>
+        <item>Remember to put on sunscreen.</item>
+        <item>How\'s it feel to be in an oven?</item>
+    </string-array>
+    <string-array name="neutralOutside">
+        <item>It\'s pretty nice outside.</item>
+        <item>Enjoy the weather!</item>
+        <item>What a nice day.</item>
+    </string-array>
+    <string-array name="coldOutside">
+        <item>Put on a jacket before you leave.</item>
+        <item>I don\'t know what those liberals are on about!</item>
+        <item>Don\'t worry, this will soon be a thing of the past.</item>
+    </string-array>
 </resources>

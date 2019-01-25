@@ -6,4 +6,12 @@
     <color name="compLab2MainDark">#582aa8</color>
     <color name="compLab2MainLight">#662ccc</color>
 
+    <!-- TEMPS -->
+    <color name="coldLight">#2D69CD</color>
+    <color name="coldDark">#2D69CD</color>
+    <color name="neutralLight">#CCCCCC</color>
+    <color name="neutralDark">#B4B4B4</color>
+    <color name="hotLight">#BE3B3D</color>
+    <color name="hotDark">#923333</color>
+
 </resources>

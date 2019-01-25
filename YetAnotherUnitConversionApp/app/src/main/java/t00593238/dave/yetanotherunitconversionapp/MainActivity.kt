@@ -2,6 +2,7 @@ package t00593238.dave.yetanotherunitconversionapp
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.text.SpannableStringBuilder
@@ -10,25 +11,28 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 
+const val OUTPUT_STRING = "t00593238.dave.yetanotherunitconversionapp.MainActivity.OUTPUT_STRING"
+const val OUTPUT_TEMPERATURE = "t00593238.dave.yetanotherunitconversionapp.MainActivity.OUTPUT_TEMPERATURE"
+
 
 class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouchListener {
     // TODO confine edittext to only number values? constrain degree symbol and unit
     // TODO fragment and tab management for output
 
-    private fun String.removeTempUnit(): Double = if (equals("")) 0.0 else replace(Regex("([°CF]{0,2})$")
-            , "").toDouble()
+    private fun String.removeTempUnit(): Double =
+            if (equals("")) 0.0
+            else replace(Regex("([°CF]{0,2})$"), "").toDouble()
+
+
 
     private var inputNumber: EditText? = null
-    private var outputNumber: TextView? = null
     private var spinner: Spinner? = null
-    private var constraintLayout: ConstraintLayout? = null
     private var cSelected: Boolean = false
 
-
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        constraintLayout = findViewById(R.id.constraint_layout)
         inputNumber = findViewById(R.id.mainTextInput)
         inputNumber?.text = SpannableStringBuilder(getString(R.string.mainTextDefaultFormat, 0.0, 'F'))
         // lambda that controls a listener to the enter key on the keyboard
@@ -39,9 +43,13 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
             }
             false
         })
+        val constraint = findViewById<ConstraintLayout>(R.id.constraintLayout_Main)
+        constraint.setOnTouchListener(object : OnSwipeTouchListener(this) {
 
-        outputNumber = findViewById(R.id.output)
-        convertToC(0.0)
+            override fun onSwipeLeft() {
+                submitInput(constraint)
+            }
+        })
 
         spinner = findViewById(R.id.spinner)
         spinner?.setOnTouchListener(this)
@@ -57,24 +65,6 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
             // Apply the adapter to the spinner
             spinner?.adapter = adapter
         }
-    }
-
-    private fun getFormat(input: Double): Int {
-        return if (input.toInt().toDouble() == input) R.string.mainTextDefaultFormat else R.string.mainTextFormat
-    }
-
-    private fun convertToF(input: Double) {
-        val f = input * (9.0 / 5.0) + 32.0
-        val format = getFormat(f)
-        outputNumber?.text = getString(format, f, 'F')
-        tempChange(f, false)
-    }
-
-    private fun convertToC(input: Double) {
-        val c = (input - 32.0) * (5.0 / 9.0)
-        val format = getFormat(c)
-        outputNumber?.text = getString(format, c, 'C')
-        tempChange(c, true)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -99,11 +89,9 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
         if (p2 == 0) {
             cSelected = true
             inputNumber?.text = SpannableStringBuilder(getString(format, input, 'F'))
-            convertToC(input)
         } else {
             cSelected = false
             inputNumber?.text = SpannableStringBuilder(getString(format, input, 'C'))
-            convertToF(input)
         }
     }
 
@@ -112,33 +100,30 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
         if (cSelected) convertToC(input) else convertToF(input)
     }
 
-    // Animations
+
+    private fun getFormat(input: Double): Int {
+        return if (input.toInt().toDouble() == input) R.string.mainTextDefaultFormat else R.string.mainTextFormat
+    }
+
+    private fun convertToF(input: Double) {
+        val f = input * (9.0 / 5.0) + 32.0
+        tempChange(f, false)
+    }
+
+    private fun convertToC(input: Double) {
+        val c = (input - 32.0) * (5.0 / 9.0)
+        tempChange(c, true)
+    }
 
     private fun tempChange(output: Double, toC: Boolean) {
-        if (toC) {
-            when {
-                output > 35.0 -> {
+        val temperatureString = getString(getFormat(output), output, if (toC) 'C' else 'F')
+        val hot = if (toC) 35.0 else 95.0
+        val n = if (toC) 10.0 else 50.0
 
-                }
-                output > 10.0 -> {
-
-                }
-                else -> {
-
-                }
-            }
-        } else {
-            when {
-                output > 95.0 -> {
-
-                }
-                output > 50.0 -> {
-
-                }
-                else -> {
-
-                }
-            }
+        val intent = Intent(this, OutputActivity::class.java).apply {
+            putExtra(OUTPUT_STRING, temperatureString)
+            putExtra(OUTPUT_TEMPERATURE, if (output > hot) 1 else if (output > n) 0 else -1)
         }
+        startActivity(intent)
     }
 }

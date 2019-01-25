@@ -27,8 +27,8 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
         else replace(Regex("([°CF]{0,2})$"), "").toDouble()
 
 
-    private var inputNumber: EditText? = null
-    private var spinner: Spinner? = null
+    private lateinit var inputNumber: EditText
+    private lateinit var spinner: Spinner
     private var cSelected: Boolean = false
 
     @SuppressLint("ClickableViewAccessibility")
@@ -36,9 +36,9 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         inputNumber = findViewById(R.id.mainTextInput)
-        inputNumber?.text = SpannableStringBuilder(getString(R.string.mainTextDefaultFormat, 0.0, 'F'))
+        inputNumber.text = SpannableStringBuilder(getString(R.string.mainTextDefaultFormat, 0.0, 'F'))
         // lambda that controls a listener to the enter key on the keyboard
-        inputNumber?.setOnKeyListener(View.OnKeyListener { p0, p1, p2 ->
+        inputNumber.setOnKeyListener(View.OnKeyListener { p0, p1, p2 ->
             if (p2?.action == KeyEvent.ACTION_DOWN && p1 == KeyEvent.KEYCODE_ENTER) {
                 submitInput(p0)
                 return@OnKeyListener true
@@ -54,8 +54,8 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
         })
 
         spinner = findViewById(R.id.spinner)
-        spinner?.setOnTouchListener(this)
-        spinner?.onItemSelectedListener = this
+        spinner.setOnTouchListener(this)
+        spinner.onItemSelectedListener = this
 
         ArrayAdapter.createFromResource(
             this,
@@ -65,14 +65,14 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_gallery_item)
             // Apply the adapter to the spinner
-            spinner?.adapter = adapter
+            spinner.adapter = adapter
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
         if (p1?.action == MotionEvent.ACTION_UP) {
-            spinner?.setSelection(if (cSelected) 1 else 0)
+            spinner.setSelection(if (cSelected) 1 else 0)
             return true
         } else if (p1?.action == MotionEvent.ACTION_DOWN) {
             return true
@@ -86,18 +86,20 @@ class MainActivity : Activity(), AdapterView.OnItemSelectedListener, View.OnTouc
 
     // Determines if using C temp or F temp to convert from (cSelected = true -> using C temp)
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        val input: Double = inputNumber?.text.toString().removeTempUnit()
+        val input: Double = inputNumber.text.toString().removeTempUnit()
         val format = getFormat(input)
         if (p2 == 0) {
             cSelected = true
-            inputNumber?.text = SpannableStringBuilder(getString(format, input, 'F'))
+            inputNumber.text = SpannableStringBuilder(getString(format, input, 'F'))
         } else {
             cSelected = false
-            inputNumber?.text = SpannableStringBuilder(getString(format, input, 'C'))
+            inputNumber.text = SpannableStringBuilder(getString(format, input, 'C'))
         }
     }
 
-    fun submitInput(view: View?) {
+
+    @Suppress("UNUSED_PARAMETER")
+    fun submitInput( view: View?) {
         val input: Double = findViewById<EditText>(R.id.mainTextInput).text.toString().removeTempUnit()
         if (cSelected) convertToC(input) else convertToF(input)
     }
